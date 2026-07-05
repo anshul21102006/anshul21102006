@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anshul - Professional YouTube Thumbnail Designer. Engineering high-CTR, scroll-stopping visual assets that scale channel growth.">
+    <meta name="keywords" content="YouTube Thumbnail Designer, Thumbnail Design, Anshul, Graphic Designer, CTR Optimization, Behance Designer">
+    <meta name="author" content="Anshul">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Anshul | Professional YouTube Thumbnail Designer">
+    <meta property="og:description" content="Creating high-CTR, scroll-stopping thumbnails that help creators scale their channels.">
+
+    <title>Anshul | Professional YouTube Thumbnail Designer</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base Reset & Variables */
+        :root {
+            --bg-color: #0B0F19;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-color: #3B82F6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --font-family: 'Inter', sans-serif;
+            --max-width: 1200px;
+            --nav-height: 70px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-family);
+            overflow-x: hidden;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* Ambient Animated Background Grid & Gradient */
+        .bg-glow-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-glow-ball {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(11, 15, 25, 0) 70%);
+            top: -200px;
+            right: -200px;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes drift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-100px, 100px) scale(1.2); }
+        }
+
+        /* Interactive Mouse Custom Pointer Glow */
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, rgba(11, 15, 25, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+            display: none;
+        }
+
+        @media (min-width: 1024px) {
+            .cursor-glow {
+                display: block;
+            }
+        }
+
+        /* Typography & Scroll Reveal Base */
+        h1, h2, h3 {
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Layout Container */
+        .container {
+            width: 100%;
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header Navigation (Glassmorphism Sticky) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: var(--text-main);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        /* Buttons Styling with Enhanced Interactive Movements */
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #FFFFFF;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px) scale(0.99);
+        }
+
+        .btn-secondary {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(59, 130, 246, 0.5);
+            color: #FFFFFF;
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(-1px) scale(0.99);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding-top: calc(var(--nav-height) + 80px);
+            padding-bottom: 100px;
+            min-height: 75vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-center {
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #A5B4FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: heroFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes heroFade {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero .btn-group {
+            justify-content: center;
+        }
+
+        /* Section Global Settings */
+        .section-padding {
+            padding: 120px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+            text-align: center;
+            background: linear-gradient(180deg, #FFFFFF 0%, #E2E8F0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 60px auto;
+        }
+
+        /* About Section */
+        .about {
+            background-color: rgba(255, 255, 255, 0.01);
+            border-top: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .about-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 48px;
+            max-width: 850px;
+            margin: 0 auto;
+            text-align: center;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .about-box:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.05);
+        }
+
+        .about-meta {
+            display: inline-flex;
+            gap: 24px;
+            margin-bottom: 24px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .about-text {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        /* Portfolio Grid Section */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .portfolio-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            aspect-ratio: 16 / 9;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* See More system hiding rules */
+        .portfolio-card.hidden-thumb {
+            display: none;
+        }
+
+        .portfolio-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Fluid motion interactions for card elements */
+        .portfolio-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px var(--accent-glow);
+        }
+
+        .portfolio-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(0deg, rgba(11, 15, 25, 0.85) 0%, rgba(11, 15, 25, 0) 60%);
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+
+        .portfolio-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            transform: translateY(15px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .portfolio-card:hover .card-title {
+            transform: translateY(0);
+        }
+
+        /* Contact Section */
+        .contact {
+            text-align: center;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .contact .btn-group {
+            justify-content: center;
+            margin-top: 32px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Lightbox Fullscreen System */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(7, 10, 17, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 24px;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            object-fit: contain;
+        }
+
+        .lightbox.active .lightbox-content {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3.2rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.6rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            nav ul {
+                display: none;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+            .about-box {
+                padding: 32px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Ambient Animation Layer -->
+<div class="bg-glow-wrapper">
+    <div class="bg-glow-ball"></div>
+</div>
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Header / Navigation Bar -->
+<header>
+    <div class="container nav-container">
+        <a href="#" class="logo">ANSHUL<span>.</span></a>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-center">
+        <div class="hero-content">
+            <h1>Creating Scroll-Stopping YouTube Thumbnails</h1>
+            <p>High-end psychological and visual optimization engineered to capture attention, maximize click-through rate (CTR), and turn casual scrollers into loyal viewers.</p>
+            <div class="btn-group">
+                <a href="#portfolio" class="btn btn-primary">View Portfolio</a>
+                <a href="https://www.behance.net/anshulkumar170" target="_blank" rel="noopener" class="btn btn-secondary">Behance Profile</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about section-padding">
+    <div class="container">
+        <div class="about-box reveal">
+            <div class="about-meta">
+                <span>Age: 20</span>
+                <span>•</span>
+                <span>Professional Design</span>
+            </div>
+            <p class="about-text">
+                I'm Anshul, a professional YouTube thumbnail designer focused on high-conversion visual strategy. By blending striking composition, color theory, and clear storytelling framework, I build elite graphical systems that communicate the core metric values of your video asset in less than a second. Let's make your content unmissable.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Section -->
+<section id="portfolio" class="section-padding">
+    <div class="container">
+        <h2 class="section-title reveal">Selected Works</h2>
+        <p class="section-desc reveal">A gallery collection showcasing tactical thumbnail executions designed across diverse niches to break CTR baselines.</p>
+
+        <style>
+            /* Small style patch to perfectly handle an premium grid layout */
+            .portfolio-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 24px;
+            }
+            @media (max-width: 1024px) {
+                .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+            }
+            @media (max-width: 768px) {
+                .portfolio-grid { grid-template-columns: 1fr; }
+            }
+        </style>
+
+        <div class="portfolio-grid" id="portfolioGrid">
+            <!-- Card 1: AI & Tech Niche Concept (Visible) -->
+            <div class="portfolio-card reveal" onclick="openLightbox('images/AI & Tech Niche Concept.jpg')">
+                <img src="images/AI & Tech Niche Concept.jpg" alt="AI & Tech Niche Concept Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">AI &amp; Tech Niche Concept</div>
+                </div>
+            </div>
+
+            <!-- Card 2: Cinematic History Documentary (Visible) -->
+            <div class="portfolio-card reveal" onclick="openLightbox('images/Cinematic History Documentary.jpg')">
+                <img src="images/Cinematic History Documentary.jpg" alt="Cinematic History Documentary Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Cinematic History Documentary</div>
+                </div>
+            </div>
+
+            <!-- Card 3: Creator Education & Tech Tutorial (Visible) -->
+            <div class="portfolio-card reveal" onclick="openLightbox('images/Creator Education & Tech Tutorial.jpg')">
+                <img src="images/Creator Education & Tech Tutorial.jpg" alt="Creator Education & Tech Tutorial Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Creator Education &amp; Tech Tutorial</div>
+                </div>
+            </div>
+
+            <!-- Card 4: Crypto Strategy Concept (Visible) -->
+            <div class="portfolio-card reveal" onclick="openLightbox('images/crypto-strategy-concept.jpg')">
+                <img src="images/crypto-strategy-concept.jpg" alt="Crypto Strategy Concept Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Crypto Strategy Concept</div>
+                </div>
+            </div>
+
+            <!-- Card 5: Curiosity Challenge Layout (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/curiosity-challenge-layout.jpg')">
+                <img src="images/curiosity-challenge-layout.jpg" alt="Curiosity Challenge Layout Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Curiosity Challenge Layout</div>
+                </div>
+            </div>
+
+            <!-- Card 6: Finance & Wealth Strategy (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/Finance & Wealth Strategy.jpg')">
+                <img src="images/Finance & Wealth Strategy.jpg" alt="Finance & Wealth Strategy Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Finance &amp; Wealth Strategy</div>
+                </div>
+            </div>
+
+            <!-- Card 7: Gaming Gear Comparison (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/gaming-gear-comparison.jpg')">
+                <img src="images/gaming-gear-comparison.jpg" alt="Gaming Gear Comparison Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Gaming Gear Comparison</div>
+                </div>
+            </div>
+
+            <!-- Card 8: Pop Culture Media Style (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/pop-culture-media-style.jpg')">
+                <img src="images/pop-culture-media-style.jpg" alt="Pop Culture Media Style Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Pop Culture Media Style</div>
+                </div>
+            </div>
+
+            <!-- Card 9: Productivity Niche Concept (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/productivity-niche-concept.jpg')">
+                <img src="images/productivity-niche-concept.jpg" alt="Productivity Niche Concept Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Productivity Niche Concept</div>
+                </div>
+            </div>
+
+            <!-- Card 10: Psychological Narrative Concept (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/psychological-narrative-concept.jpg')">
+                <img src="images/psychological-narrative-concept.jpg" alt="Psychological Narrative Concept Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">Psychological Narrative Concept</div>
+                </div>
+            </div>
+
+            <!-- Card 11: Whats In The Box Thumbnail (Hidden) -->
+            <div class="portfolio-card reveal hidden-thumb" onclick="openLightbox('images/whats in the box thumbnail.png')">
+                <img src="images/whats in the box thumbnail.png" alt="Whats In The Box Thumbnail" onerror="this.parentNode.style.background='linear-gradient(45deg, #1e1b4b, #312e81)'">
+                <div class="card-overlay">
+                    <div class="card-title">What's In The Box</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- See More Button Wrapper Layout -->
+        <div style="text-align: center; margin-top: 40px;" id="seeMoreWrapper">
+            <button class="btn btn-secondary" id="seeMoreBtn" onclick="revealAllThumbnails()">See More Work</button>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact section-padding">
+    <div class="container">
+        <h2 class="section-title reveal">Let's Scale Your Channel</h2>
+        <p class="section-desc reveal">Ready to dominate the YouTube homepage? Get in touch to secure high-performance thumbnail packages optimized for growth.</p>
+
+        <div class="btn-group reveal">
+            <!-- Email Contact Link Card with SVG Icon -->
+            <a href="mailto:anshul21102006@gmail.com" class="btn btn-primary">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                Email Me
+            </a>
+
+            <!-- Instagram Link Card with SVG Icon -->
+            <a href="https://www.instagram.com/a_edits_21102006" target="_blank" rel="noopener" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                a_edits_21102006
+            </a>
+
+            <!-- Behance Portfolio Link Card with SVG Icon -->
+            <a href="https://www.behance.net/anshulkumar170" target="_blank" rel="noopener" class="btn btn-secondary">
+                <svg viewBox="0 0 24 24"><path d="M22 13.003c0-.825-.132-1.488-.396-1.99-.264-.502-.638-.888-1.122-1.159a3.61 3.61 0 00-1.63-.406c-.66 0-1.238.14-1.733.419-.495.279-.877.674-1.144 1.186-.268.511-.401 1.127-.401 1.847 0 .741.134 1.365.401 1.872.268.508.654.897 1.159 1.168a3.626 3.626 0 001.761.406c.71 0 1.31-.157 1.801-.472.492-.315.86-.745 1.106-1.291H18.89c-.11.23-.294.409-.553.538-.259.129-.564.194-.916.194-.486 0-.871-.137-1.157-.412-.285-.275-.451-.693-.497-1.253H22v-.057zm-2.008-1.633c.241.246.377.593.411 1.04H16.89c.026-.453.153-.801.383-1.046.229-.244.551-.366.966-.366.398 0 .717.124.953.372zM9.13 11.272c.414-.241.724-.549.932-.924.207-.375.311-.822.311-1.341 0-.671-.168-1.222-.505-1.654C9.53 6.921 9.034 6.591 8.38 6.464 7.94 6.38 7.218 6.338 6.212 6.338H1.5v11.324h5.05c1.107 0 1.954-.047 2.542-.142.588-.095 1.077-.323 1.467-.684.39-.361.585-.88.585-1.558 0-.585-.143-1.079-.428-1.483a2.915 2.915 0 00-1.586-.951zm-4.321-3.23h1.365c.66 0 1.116.096 1.367.289.252.193.378.497.378.913 0 .376-.118.665-.353.867-.235.201-.645.302-1.23.302H4.809V8.042zm3.328 6.745c-.267.199-.74.299-1.417.299H4.809v-2.586h1.564c.732 0 1.222.094 1.472.283.25.189.375.503.375.941 0 .438-.131.792-.383 1.063zM15.5 4h5v1.5h-5V4z"/></svg>
+                Behance Profile
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>&copy; 2026 Anshul. All Rights Reserved. Engineered for maximum visual scale.</p>
+    </div>
+</footer>
+
+<!-- Lightbox Display Layer Overlay -->
+<div class="lightbox" id="portfolioLightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img src="" alt="Fullscreen View" class="lightbox-content" id="lightboxImg">
+</div>
+
+<!-- Core Operations Control Script -->
+<script>
+    // Universal Lightbox Controls
+    const lightbox = document.getElementById('portfolioLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+
+    function openLightbox(imgSrc) {
+        lightboxImg.src = imgSrc;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(() => { lightboxImg.src = ''; }, 400);
+    }
+
+    // Interactive Core Mouse Trailing Lights
+    const cursorGlow = document.getElementById('cursorGlow');
+    if(window.innerWidth >= 1024) {
+        window.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+    }
+
+    // Structural Elements Scroll Observer Intersection Rules
+    const revealElements = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    revealElements.forEach(el => observer.observe(el));
+
+    // Dynamic See More Work reveal system engine code
+    function revealAllThumbnails() {
+        const hiddenCards = document.querySelectorAll('.portfolio-card.hidden-thumb');
+        hiddenCards.forEach(card => {
+            card.style.display = 'block';
+            setTimeout(() => {
+                card.classList.add('active');
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 50);
+        });
+        document.getElementById('seeMoreWrapper').style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
